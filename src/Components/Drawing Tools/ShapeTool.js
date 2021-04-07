@@ -3,8 +3,7 @@ import { useProjectContext } from "../../Context/ProjectContext";
 import Paper, { Path, Point, PaperScope, project, Tool } from "paper";
 
 const ShapeTool = () => {
-  const [selectedShape, setSelectedShape] = useState("Square");
-  const [state, dispatch] = useProjectContext();
+  const [projectState, projectDispatch] = useProjectContext();
 
   return (
     <div className="Drawing-tools">
@@ -13,21 +12,21 @@ const ShapeTool = () => {
         <button
           onClick={() => {
             console.log("square was clicked");
-            dispatch({ type: "SET_SHAPE_TYPE", payload: "square" });
+            projectDispatch({ type: "SET_SHAPE_TYPE", payload: "square" });
           }}
         >
           Square
         </button>
         <button
           onClick={() =>
-            dispatch({ type: "SET_SHAPE_TYPE", payload: "circle" })
+            projectDispatch({ type: "SET_SHAPE_TYPE", payload: "circle" })
           }
         >
           Circle
         </button>
         <button
           onClick={() =>
-            dispatch({ type: "SET_SHAPE_TYPE", payload: "triangle" })
+            projectDispatch({ type: "SET_SHAPE_TYPE", payload: "triangle" })
           }
         >
           Triangle
