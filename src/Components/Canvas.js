@@ -63,7 +63,15 @@ const Canvas = (props) => {
     project.clear();
   };
 
-  const handleMouseDrag = (event) => {};
-  return <canvas id="paper-canvas" onMouseDown={handleMouseDown} />;
+  return (
+    <canvas
+      id="paper-canvas"
+      onMouseDown={handleMouseDown}
+      width="100%"
+      height="100%"
+      data-paper-resize
+    />
+  );
 };
+
 export default Canvas;

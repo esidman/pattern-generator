@@ -7,8 +7,10 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <DrawingTools />
-      <CanvasContainer />
+      <div className="body-container">
+        <DrawingTools />
+        <CanvasContainer />
+      </div>
     </div>
   );
 }
