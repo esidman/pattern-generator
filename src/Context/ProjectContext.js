@@ -25,7 +25,6 @@ const reducer = (state, action) => {
 
 export function ProjectProvider({ children }) {
   const squareShape = (event) => {
-    console.log("drawingSquare");
     project.clear();
 
     // Sets beginning and end points, and pattern spacing
@@ -69,11 +68,8 @@ export function ProjectProvider({ children }) {
     }
   };
   const circleShape = (event) => {
-    console.log("drawingCircle");
-    // console.log("event", event)
     // Refreshes canvas every frame (super important for performance!)
     project.clear();
-
     // Sets beginning and end points, and pattern spacing
     var x1 = event.downPoint.x;
     var y1 = event.downPoint.y;
@@ -84,17 +80,14 @@ export function ProjectProvider({ children }) {
     var point1 = new Point(x1, y1);
     var point2 = new Point(x1, y2);
     var r = point1.getDistance(point2);
-    // console.log("beforeloop")
-    // console.log("equation", r)
+
     // Draws pattern
     for (var y = 0; y <= 10000; y += h) {
-      // console.log("outerforloop")
       for (
         var x = x1;
         x <= Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + x1;
         x += w
       ) {
-        // console.log("innerforloop")
         new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
       }
     }
@@ -108,7 +101,40 @@ export function ProjectProvider({ children }) {
       }
     }
   };
-  const triangleShape = () => {};
+  const triangleShape = (event) => {
+    // Refreshes canvas every frame (super important for performance!)
+    project.clear();
+
+    // Sets beginning and end points, and pattern spacing
+    var x1 = event.downPoint.x;
+    var y1 = event.downPoint.y;
+    var x2 = event.point.x;
+    var y2 = event.point.y;
+    var w = 15;
+
+    // Draws pattern
+    if (y2 > y1) {
+      for (var y = y1, i = 0; y <= y2; y += (w * Math.sqrt(3)) / 2, i++) {
+        var patternShape = new Path.Line(
+          new Point(x1 + (i * w) / 2, y),
+          new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
+        );
+        patternShape.strokeColor = "#8A124D";
+        patternShape.strokeWidth = 1;
+      }
+    }
+
+    if (y2 < y1) {
+      for (var y = y1, i = 0; y >= y2; y -= (w * Math.sqrt(3)) / 2, i--) {
+        var patternShape = new Path.Line(
+          new Point(x1 + (i * w) / 2, y),
+          new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
+        );
+        patternShape.strokeColor = "#8A124D";
+        patternShape.strokeWidth = 1;
+      }
+    }
+  };
 
   const value = {
     shapeType: "circle",
@@ -119,22 +145,18 @@ export function ProjectProvider({ children }) {
   const [projectState, projectDispatch] = useReducer(reducer, value);
 
   useEffect(() => {
-    console.log("shapeType", projectState.shapeType);
+    // // Paperjs event listener function that always runs
     if (projectState.shapeType === "square") {
-      console.log("setting draw shape to square");
       projectDispatch({ type: "SET_DRAW_SHAPE", payload: squareShape });
     }
     if (projectState.shapeType === "circle") {
-      console.log("dispatching circle shape");
       projectDispatch({ type: "SET_DRAW_SHAPE", payload: circleShape });
     }
     if (projectState.shapeType === "triangle") {
       projectDispatch({ type: "SET_DRAW_SHAPE", payload: triangleShape });
     }
   }, [projectState.shapeType]);
-  useEffect(() => {
-    console.log("changing draw shape", projectState);
-  }, [projectState.drawShape]);
+
   return (
     <ProjectContext.Provider value={[projectState, projectDispatch]}>
       {children}
