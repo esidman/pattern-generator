@@ -1,5 +1,6 @@
 import { useContext, createContext, useReducer, useEffect } from "react";
-import { Path, Point, project } from "paper";
+import { Path, Point, project, activeLayer } from "paper";
+import { Layer, projects } from "paper/dist/paper-core";
 const ProjectContext = createContext();
 
 export function useProjectContext() {
@@ -18,6 +19,21 @@ const reducer = (state, action) => {
         ...state,
         drawShape: action.payload,
       };
+    case "SET_PATTERN_COLOR":
+      return {
+        ...state,
+        patternColor: action.payload,
+      };
+    case "SET_SPACING_VALUE":
+      return {
+        ...state,
+        spacingValue: action.payload,
+      };
+    case "SET_SIZE_VALUE":
+      return {
+        ...state,
+        sizeValue: action.payload,
+      };
     default:
       return state;
   }
@@ -32,13 +48,15 @@ export function ProjectProvider({ children }) {
     var y1 = event.downPoint.y;
     var x2 = event.point.x;
     var y2 = event.point.y;
-    var w = 30;
+    var w = projectState.spacingValue;
+    var size = projectState.sizeValue;
 
     // Draws pattern
     if (x2 < x1 && y2 < y1) {
       for (var x = x1; x >= x2; x -= w) {
         for (var y = y1; y >= y2; y -= w) {
-          new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
+          new Path.Circle(new Point(x, y), size).fillColor =
+            projectState.patternColor;
         }
       }
     }
@@ -46,7 +64,8 @@ export function ProjectProvider({ children }) {
     if (x2 > x1 && y2 < y1) {
       for (var x = x1; x <= x2; x += w) {
         for (var y = y1; y >= y2; y -= w) {
-          new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
+          new Path.Circle(new Point(x, y), size).fillColor =
+            projectState.patternColor;
         }
       }
     }
@@ -54,7 +73,8 @@ export function ProjectProvider({ children }) {
     if (x2 < x1 && y2 > y1) {
       for (var x = x1; x >= x2; x -= w) {
         for (var y = y1; y <= y2; y += w) {
-          new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
+          new Path.Circle(new Point(x, y), size).fillColor =
+            projectState.patternColor;
         }
       }
     }
@@ -62,7 +82,8 @@ export function ProjectProvider({ children }) {
     if (x2 > x1 && y2 > y1) {
       for (var x = x1; x <= x2; x += w) {
         for (var y = y1; y <= y2; y += w) {
-          new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
+          new Path.Circle(new Point(x, y), size).fillColor =
+            projectState.patternColor;
         }
       }
     }
@@ -75,8 +96,9 @@ export function ProjectProvider({ children }) {
     var y1 = event.downPoint.y;
     var x2 = event.point.x;
     var y2 = event.point.y;
-    var w = 30;
-    var h = 30;
+    var w = projectState.spacingValue;
+    var h = projectState.spacingValue;
+    var size = projectState.sizeValue;
     var point1 = new Point(x1, y1);
     var point2 = new Point(x1, y2);
     var r = point1.getDistance(point2);
@@ -88,7 +110,9 @@ export function ProjectProvider({ children }) {
         x <= Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + x1;
         x += w
       ) {
-        new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
+        new Path.Circle(new Point(x, y), size).fillColor =
+          projectState.patternColor;
+        console.log(projectState.patternColor);
       }
     }
     for (var y = 0; y <= 10000; y += h) {
@@ -97,7 +121,8 @@ export function ProjectProvider({ children }) {
         x >= -Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + x1;
         x -= w
       ) {
-        new Path.Circle(new Point(x, y), 3).fillColor = "#8A124D";
+        new Path.Circle(new Point(x, y), size).fillColor =
+          projectState.patternColor;
       }
     }
   };
@@ -110,52 +135,68 @@ export function ProjectProvider({ children }) {
     var y1 = event.downPoint.y;
     var x2 = event.point.x;
     var y2 = event.point.y;
-    var w = 15;
+    var w = projectState.spacingValue;
+    var size = projectState.sizeValue;
 
     // Draws pattern
     if (y2 > y1) {
-      for (var y = y1, i = 0; y <= y2; y += (w * Math.sqrt(3)) / 2, i++) {
-        var patternShape = new Path.Line(
-          new Point(x1 + (i * w) / 2, y),
-          new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
-        );
-        patternShape.strokeColor = "#8A124D";
-        patternShape.strokeWidth = 1;
+      for (var y = y1; y <= y2; y += (Math.sqrt(3) / 2) * w) {
+        for (
+          var x = (-1 / Math.sqrt(3)) * y + x1 + (1 / Math.sqrt(3)) * y1;
+          x <= (1 / Math.sqrt(3)) * y + x1 - 0.578 * y1;
+          x += w
+        ) {
+          new Path.Circle(new Point(x, y), size).fillColor =
+            projectState.patternColor;
+        }
       }
     }
 
     if (y2 < y1) {
-      for (var y = y1, i = 0; y >= y2; y -= (w * Math.sqrt(3)) / 2, i--) {
-        var patternShape = new Path.Line(
-          new Point(x1 + (i * w) / 2, y),
-          new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
-        );
-        patternShape.strokeColor = "#8A124D";
-        patternShape.strokeWidth = 1;
+      for (var y = y1; y >= y2; y -= (Math.sqrt(3) / 2) * w) {
+        for (
+          var x = (1 / Math.sqrt(3)) * y + x1 - (1 / Math.sqrt(3)) * y1;
+          x <= (-1 / Math.sqrt(3)) * y + x1 + 0.578 * y1;
+          x += w
+        ) {
+          new Path.Circle(new Point(x, y), size).fillColor =
+            projectState.patternColor;
+        }
       }
     }
   };
 
   const value = {
-    shapeType: "circle",
-    drawShape: circleShape,
+    shapeType: "square",
+    drawShape: squareShape,
     patternType: "circle-pattern",
-    patternColor: "#8A124D",
+    patternColor: "#D3AD44",
+    spacingValue: 30,
+    sizeValue: 3,
   };
   const [projectState, projectDispatch] = useReducer(reducer, value);
 
-  useEffect(() => {
-    // // Paperjs event listener function that always runs
-    if (projectState.shapeType === "square") {
-      projectDispatch({ type: "SET_DRAW_SHAPE", payload: squareShape });
-    }
-    if (projectState.shapeType === "circle") {
-      projectDispatch({ type: "SET_DRAW_SHAPE", payload: circleShape });
-    }
-    if (projectState.shapeType === "triangle") {
-      projectDispatch({ type: "SET_DRAW_SHAPE", payload: triangleShape });
-    }
-  }, [projectState.shapeType]);
+  useEffect(
+    () => {
+      // // Paperjs event listener function that always runs
+      if (projectState.shapeType === "square") {
+        projectDispatch({ type: "SET_DRAW_SHAPE", payload: squareShape });
+      }
+      if (projectState.shapeType === "circle") {
+        projectDispatch({ type: "SET_DRAW_SHAPE", payload: circleShape });
+      }
+      if (projectState.shapeType === "triangle") {
+        projectDispatch({ type: "SET_DRAW_SHAPE", payload: triangleShape });
+      }
+    },
+    // useEffect dependency
+    [
+      projectState.shapeType,
+      projectState.patternColor,
+      projectState.spacingValue,
+      projectState.sizeValue,
+    ]
+  );
 
   return (
     <ProjectContext.Provider value={[projectState, projectDispatch]}>

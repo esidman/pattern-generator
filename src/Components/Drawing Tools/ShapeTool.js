@@ -7,29 +7,69 @@ const ShapeTool = () => {
 
   return (
     <div className="Drawing-tools">
-      <div>Shape</div>
+      <div className="tool-name">Shape</div>
       <div>
         <button
+          className="shape-button"
           onClick={() => {
-            console.log("square was clicked");
             projectDispatch({ type: "SET_SHAPE_TYPE", payload: "square" });
           }}
         >
-          Square
+          <svg
+            class="shape-icon"
+            width="62"
+            height="62"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="1"
+              y="1"
+              width="62"
+              height="62"
+              stroke="#8A124D"
+              stroke-width="2"
+            />
+          </svg>
         </button>
         <button
+          className="shape-button"
           onClick={() =>
             projectDispatch({ type: "SET_SHAPE_TYPE", payload: "circle" })
           }
         >
-          Circle
+          <svg
+            class="shape-icon"
+            width="62"
+            height="62"
+            viewBox="0 0 62 62"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="31" cy="31" r="30" stroke="#8A124D" stroke-width="2" />
+          </svg>
         </button>
         <button
+          className="shape-button"
           onClick={() =>
             projectDispatch({ type: "SET_SHAPE_TYPE", payload: "triangle" })
           }
         >
-          Triangle
+          <svg
+            class="shape-icon"
+            width="72"
+            height="62"
+            viewBox="0 0 72 62"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.737 61L36 1.99149L70.263 61H1.737Z"
+              stroke="#8A124D"
+              stroke-width="2"
+            />
+          </svg>
         </button>
       </div>
     </div>

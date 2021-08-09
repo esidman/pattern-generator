@@ -34,20 +34,30 @@ const CanvasContainer = () => {
         <button type="button" className="canvas-history-button">
           Redo
         </button>
-        <button type="button" className="canvas-history-button">
+        <button
+          type="button"
+          className="canvas-history-button"
+          onClick={() => project.clear()}
+        >
           Clear
         </button>
+        <h3>Click and drag in the canvas to draw</h3>
       </div>
       <div className="canvas-box">
         <Canvas drawShape={projectState.drawShape} />
       </div>
       <div className="canvas-bottom-button-group">
-        <button type="button" className="color-swatch">
-          Background Color
-        </button>
+        <div className="background-color-button-group">
+          <button
+            type="button"
+            className="background-color-button"
+            backgroundColor="fffff"
+          ></button>
+          <p className="background-color-name">Background Color</p>
+        </div>
         <button
           className="export-button"
-          onClick={() => handleExportSVG("test")}
+          onClick={() => handleExportSVG("pattern")}
         >
           Export SVG
         </button>

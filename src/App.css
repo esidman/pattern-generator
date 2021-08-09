@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  background-color: #fff8f5;
 }
 
 #root {
@@ -35,6 +36,14 @@ h1 {
   font-weight: 300;
   margin-top: 1rem;
   margin-bottom: 3rem;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 12px;
 }
 
 .header {
@@ -83,6 +92,7 @@ canvas {
   display: flex;
   padding-bottom: 10px;
   gap: 12px;
+  align-items: center;
 }
 .canvas-history-button {
   background-color: white;
@@ -94,22 +104,111 @@ canvas {
   padding: 4px 12px;
 }
 
+.canvas-history-button:hover {
+  background-color: #8b134d;
+  color: white;
+}
+
 .canvas-bottom-button-group {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
+
+.background-color-button-group {
+  display: flex;
+  align-items: center;
+}
+
+.color-button-block {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pattern-button-block {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .export-button {
   background-color: #8b134d;
   border: none;
   color: white;
   font-family: "Apercu Mono Pro";
   font-size: 1rem;
+  height: 60px;
   padding: 20px 30px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.color-button {
+  border: none;
+  height: 36px;
+  width: 36px;
+  /* margin: 0px 0px 1px 1px; */
+}
+
+.color-button:hover {
+  transform: scale(1.1);
+}
+
+.color-button:focus {
+  outline: 4px solid #8b134d;
+  outline-offset: -2px;
+}
+
+.background-color-button {
+  background-color: white;
+  height: 36px;
+  width: 36px;
+  margin-right: 18px;
+  outline: 4px solid #8b134d;
+  outline-offset: -2px;
+}
+
+.shape-button {
+  background-color: transparent;
+  border: none;
+}
+
+.shape-icon:hover {
+  fill: #8b134d;
+  /* fill-opacity: 0.1; */
+}
+
+.shape-icon:selected {
+  fill: #8b134d;
+}
+
+.pattern-button {
+  background-color: transparent;
+  border: none;
+  /* margin: 3px; */
+  padding-bottom: 8px;
+}
+
+.pattern-icon:hover {
+  fill: #8b134d;
+  /* fill-opacity: 0.1; */
+}
+
+.pattern-element:hover {
+  fill: white;
 }
 
 /* Vertical spacing between drawing tools */
 .Drawing-tools {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
+}
+
+.tool-name {
+  font-size: 1.125rem;
+  margin-bottom: 14px;
+}
+
+.background-color-name {
+  font-size: 1.125rem;
 }
 
 .Toolbar {
