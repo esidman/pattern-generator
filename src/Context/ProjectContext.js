@@ -1,5 +1,13 @@
 import { useContext, createContext, useReducer, useEffect } from "react";
-import { Path, Point, project, activeLayer } from "paper";
+import {
+  Path,
+  Point,
+  Rectangle,
+  Circle,
+  project,
+  Group,
+  activeLayer,
+} from "paper";
 import { Layer, projects } from "paper/dist/paper-core";
 const ProjectContext = createContext();
 
@@ -60,8 +68,55 @@ export function ProjectProvider({ children }) {
     var y2 = event.point.y;
     var w = projectState.spacingValue;
     var size = projectState.sizeValue;
+    var i;
+    var j = 32;
 
-    // Draws pattern
+    // Draws Halftone
+    if (projectState.patternType === "halftone-circles") {
+      if (x2 < x1 && y2 < y1) {
+        for (var y = y1, i = j; y >= y2; y -= w / 2, i--) {
+          for (var x = x1; x >= x2; x -= w / 2) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      if (x2 > x1 && y2 < y1) {
+        for (var y = y1, i = j; y >= y2; y -= w / 2, i--) {
+          for (var x = x1; x <= x2; x += w / 2) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      if (x2 < x1 && y2 > y1) {
+        for (var y = y1, i = j; y <= y2; y += w / 2, i--) {
+          for (var x = x1; x >= x2; x -= w / 2) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      if (x2 > x1 && y2 > y1) {
+        for (var y = y1, i = j; y <= y2; y += w / 2, i--) {
+          for (var x = x1; x <= x2; x += w / 2) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      return;
+    }
+
+    // Draws solid shape
+    if (projectState.patternType === "solid") {
+      var rectangle = new Rectangle(new Point(x1, y1), new Point(x2, y2));
+      var path = new Path.Rectangle(rectangle);
+      path.fillColor = projectState.patternColor;
+      return;
+    }
+
+    // Draws grid patterns
     if (x2 < x1 && y2 < y1) {
       for (var x = x1; x >= x2; x -= w) {
         for (var y = y1; y >= y2; y -= w) {
@@ -110,8 +165,45 @@ export function ProjectProvider({ children }) {
     var r = point1.getDistance(point2);
     var j = 50;
     var i;
+    var group = new Group();
 
-    // Draws pattern
+    // Draws Diagonal Lines
+    if (projectState.patternType === "diagonal-lines") {
+      for (var y = y1 + w, i = 1; y <= y2; y += w / 2, i++) {
+        var patternShape = new Path.Line(
+          new Point(
+            x1 + (i * w) / 2,
+            -Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + y1
+          ),
+          new Point(
+            x1 + (i * w) / 2,
+            Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + y1
+          )
+        );
+        patternShape.strokeColor = projectState.patternColor;
+        patternShape.strokeWidth = size / 3;
+        group.addChild(patternShape);
+      }
+      for (var y = y1, i = 0; y <= y2; y += w / 2, i--) {
+        var patternShape2 = new Path.Line(
+          new Point(
+            x1 + (i * w) / 2,
+            -Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + y1
+          ),
+          new Point(
+            x1 + (i * w) / 2,
+            Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + y1
+          )
+        );
+        patternShape2.strokeColor = projectState.patternColor;
+        patternShape2.strokeWidth = size / 3;
+        group.addChild(patternShape2);
+      }
+      group.rotate(45, x1, y1);
+      return;
+    }
+
+    // Draws Halftone
     if (projectState.patternType === "halftone-circles") {
       // Draws pattern for downward mouse drag
       if (y2 > y1) {
@@ -166,6 +258,14 @@ export function ProjectProvider({ children }) {
       return;
     }
 
+    // Draws solid shape
+    if (projectState.patternType === "solid") {
+      var circle = new Path.Circle(point1, r);
+      circle.fillColor = projectState.patternColor;
+      return;
+    }
+
+    // Draws grid patterns
     for (var y = 0; y <= 10000; y += h) {
       for (
         var x = x1;
@@ -197,9 +297,6 @@ export function ProjectProvider({ children }) {
     var w = projectState.spacingValue;
     var size = projectState.sizeValue;
 
-    // Sets circle diameter and spacing for halftones
-    var w = 15;
-
     // Sets number of rows
     var j = 50;
     var i;
@@ -207,22 +304,30 @@ export function ProjectProvider({ children }) {
     // Draws pattern
     if (projectState.patternType === "diagonal-lines") {
       if (y2 > y1) {
-        for (var y = y1, i = 0; y <= y2; y += (w * Math.sqrt(3)) / 2, i++) {
+        for (
+          var y = y1, i = 0;
+          y <= y2;
+          y += ((w / 2) * Math.sqrt(3)) / 2, i++
+        ) {
           var patternShape = new Path.Line(
-            new Point(x1 + (i * w) / 2, y),
-            new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
+            new Point(x1 + (i * w) / 2 / 2, y),
+            new Point(x1 - (y2 - y1) / Math.sqrt(3) + (i * w) / 2, y2)
           );
           patternShape.strokeColor = projectState.patternColor;
-          patternShape.strokeWidth = 1;
+          patternShape.strokeWidth = size / 3;
         }
       } else {
-        for (var y = y1, i = 0; y >= y2; y -= (w * Math.sqrt(3)) / 2, i--) {
+        for (
+          var y = y1, i = 0;
+          y >= y2;
+          y -= ((w / 2) * Math.sqrt(3)) / 2, i--
+        ) {
           var patternShape = new Path.Line(
-            new Point(x1 + (i * w) / 2, y),
-            new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
+            new Point(x1 + (i * w) / 2 / 2, y),
+            new Point(x1 - (y2 - y1) / Math.sqrt(3) + (i * w) / 2, y2)
           );
           patternShape.strokeColor = projectState.patternColor;
-          patternShape.strokeWidth = 1;
+          patternShape.strokeWidth = size / 3;
         }
       }
       return;
@@ -231,26 +336,34 @@ export function ProjectProvider({ children }) {
     if (projectState.patternType === "halftone-circles") {
       // Draws pattern for downward mouse drag
       if (y2 > y1) {
-        for (var y = y1, i = j; y <= y2; y += (Math.sqrt(3) / 2) * w, i--) {
+        for (
+          var y = y1, i = j;
+          y <= y2;
+          y += ((Math.sqrt(3) / 2) * w) / 2, i--
+        ) {
           for (
             var x = (-1 / Math.sqrt(3)) * y + x1 + (1 / Math.sqrt(3)) * y1;
             x <= (1 / Math.sqrt(3)) * y + x1 - 0.578 * y1;
-            x += w
+            x += w / 2
           ) {
-            new Path.Circle(new Point(x, y), (w * (i / j)) / 2).fillColor =
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
               projectState.patternColor;
           }
         }
       }
       // Draws pattern for upward mouse drag
       if (y2 < y1) {
-        for (var y = y1, i = j; y >= y2; y -= (Math.sqrt(3) / 2) * w, i--) {
+        for (
+          var y = y1, i = j;
+          y >= y2;
+          y -= ((Math.sqrt(3) / 2) * w) / 2, i--
+        ) {
           for (
             var x = (1 / Math.sqrt(3)) * y + x1 - (1 / Math.sqrt(3)) * y1;
             x <= (-1 / Math.sqrt(3)) * y + x1 + 0.578 * y1;
-            x += w
+            x += w / 2
           ) {
-            new Path.Circle(new Point(x, y), (w * (i / j)) / 2).fillColor =
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
               projectState.patternColor;
           }
         }
@@ -258,6 +371,21 @@ export function ProjectProvider({ children }) {
       return;
     }
 
+    // Draws solid shape
+    if (projectState.patternType === "solid") {
+      var path = new Path({
+        segments: [
+          [x1, y1],
+          [(-1 / Math.sqrt(3)) * y2 + x1 + (1 / Math.sqrt(3)) * y1, y2],
+          [(1 / Math.sqrt(3)) * y2 + x1 - 0.578 * y1, y2],
+        ],
+        fillColor: projectState.patternColor,
+        closed: true,
+      });
+      return;
+    }
+
+    // Draws grid patterns
     if (y2 > y1) {
       for (var y = y1; y <= y2; y += (Math.sqrt(3) / 2) * w) {
         for (
