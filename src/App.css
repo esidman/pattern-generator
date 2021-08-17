@@ -121,8 +121,11 @@ canvas {
 }
 
 .color-button-block {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 38px 38px 38px 38px 38px 38px;
+  grid-template-rows: 38px 38px 38px 38px;
 }
 
 .pattern-button-block {
@@ -146,7 +149,7 @@ canvas {
   border: none;
   height: 36px;
   width: 36px;
-  /* margin: 0px 0px 1px 1px; */
+  margin: 0px 0px 2px 2px;
 }
 
 .color-button:hover {
@@ -158,18 +161,32 @@ canvas {
   outline-offset: -2px;
 }
 
+.color-button-selected {
+  border: none;
+  height: 36px;
+  width: 36px;
+  margin: 0px 0px 2px 2px;
+  outline: 4px solid #8b134d;
+  outline-offset: -4px;
+}
+
+.color-button-selected:hover {
+  transform: scale(1.1);
+}
+
 .background-color-button {
   background-color: white;
   height: 36px;
   width: 36px;
   margin-right: 18px;
   outline: 4px solid #8b134d;
-  outline-offset: -2px;
+  outline-offset: -3px;
 }
 
 .shape-button {
   background-color: transparent;
   border: none;
+  padding: 0 14px 0 0;
 }
 
 .shape-icon:hover {
@@ -177,7 +194,7 @@ canvas {
   /* fill-opacity: 0.1; */
 }
 
-.shape-icon:selected {
+.shape-icon-selected {
   fill: #8b134d;
 }
 
@@ -185,12 +202,16 @@ canvas {
   background-color: transparent;
   border: none;
   /* margin: 3px; */
-  padding-bottom: 8px;
+  padding: 0 8px 6px 0;
 }
 
 .pattern-icon:hover {
   fill: #8b134d;
   /* fill-opacity: 0.1; */
+}
+
+.pattern-icon-selected {
+  fill: #8b134d;
 }
 
 .pattern-element:hover {
@@ -199,7 +220,7 @@ canvas {
 
 /* Vertical spacing between drawing tools */
 .Drawing-tools {
-  margin-bottom: 36px;
+  margin-bottom: 30px;
 }
 
 .tool-name {
@@ -219,4 +240,126 @@ canvas {
   font-family: "Apercu Mono Pro";
   src: local("Apercu Mono Pro"),
     url(./Fonts/apercu_mono_pro.otf) format("opentype");
+}
+
+/* Color button grid */
+
+button.lively-lavender {
+  background-color: #f0e4eb;
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+button.brash-burgundy {
+  background-color: #8d134d;
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+button.black-raspberry {
+  background-color: #341225;
+  grid-column-start: 1;
+  grid-row-start: 3;
+}
+
+button.cold-indigo {
+  background-color: #96bcbc;
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+button.medium-indigo {
+  background-color: #0a2c49;
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+button.dark-indigo {
+  background-color: #001129;
+  grid-column-start: 2;
+  grid-row-start: 3;
+}
+
+button.giddy-green {
+  background-color: #e4f2e4;
+  grid-column-start: 3;
+  grid-row-start: 1;
+}
+
+button.growing-green {
+  background-color: #80998c;
+  grid-column-start: 3;
+  grid-row-start: 2;
+}
+
+button.graceful-olive {
+  background-color: #6f7347;
+  grid-column-start: 3;
+  grid-row-start: 3;
+}
+
+button.forest-green {
+  background-color: #2d3f23;
+  grid-column-start: 3;
+  grid-row-start: 4;
+}
+
+button.youthful-yellow {
+  background-color: #fbef4f;
+  grid-column-start: 4;
+  grid-row-start: 1;
+}
+
+button.yearning-yellow {
+  background-color: #fedc34;
+  grid-column-start: 4;
+  grid-row-start: 2;
+}
+
+button.mature-yellow {
+  background-color: #fdbe14;
+  grid-column-start: 4;
+  grid-row-start: 3;
+}
+
+button.original-ochre {
+  background-color: #d3ad44;
+  grid-column-start: 5;
+  grid-row-start: 1;
+}
+
+button.talented-tan {
+  background-color: #ae8035;
+  grid-column-start: 5;
+  grid-row-start: 2;
+}
+
+button.balanced-brown {
+  background-color: #664516;
+  grid-column-start: 5;
+  grid-row-start: 3;
+}
+
+button.playful-peach {
+  background-color: #edae9f;
+  grid-column-start: 6;
+  grid-row-start: 1;
+}
+
+button.rebellious-red {
+  background-color: #f06553;
+  grid-column-start: 6;
+  grid-row-start: 2;
+}
+
+button.ripened-red {
+  background-color: #962f1e;
+  grid-column-start: 6;
+  grid-row-start: 3;
+}
+
+button.website-white {
+  background-color: #fbfbf5;
+  grid-column-start: 2;
+  grid-row-start: 4;
 }

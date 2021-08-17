@@ -17,7 +17,9 @@ const CanvasContainer = () => {
 
     var url =
       "data:image/svg+xml;utf8," +
-      encodeURIComponent(project.exportSVG({ asString: true }));
+      encodeURIComponent(
+        project.exportSVG({ asString: true, bounds: "content" })
+      );
 
     var link = document.createElement("a");
     link.download = fileName;

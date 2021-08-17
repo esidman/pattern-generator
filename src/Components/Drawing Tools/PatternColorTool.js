@@ -1,16 +1,25 @@
+import classNames from "classnames";
 import React from "react";
 import { useProjectContext } from "../../Context/ProjectContext";
 
 const PatternColorTool = () => {
   const [projectState, projectDispatch] = useProjectContext();
 
+  const isPatternColorSelected = (color) => {
+    return projectState.patternColor === color;
+  };
+
   return (
     <div className="Drawing-tools">
       <div className="tool-name">Pattern Color</div>
       <div className="color-button-block">
         <button
-          className="color-button"
-          style={{ backgroundColor: "#F0E4EB" }}
+          className={classNames(
+            "lively-lavender",
+            isPatternColorSelected("#F0E4EB")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Lively Lavender"
           onClick={() => {
             projectDispatch({
@@ -22,8 +31,12 @@ const PatternColorTool = () => {
           {/* Lively Lavendar */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#8D134D" }}
+          className={classNames(
+            "brash-burgundy",
+            isPatternColorSelected("#8D134D")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Brash Burgundy"
           onClick={() => {
             projectDispatch({
@@ -35,8 +48,12 @@ const PatternColorTool = () => {
           {/* Brash Burgundy */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#341225" }}
+          className={classNames(
+            "black-raspberry",
+            isPatternColorSelected("#341225")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Black Raspberry"
           onClick={() => {
             projectDispatch({
@@ -48,8 +65,12 @@ const PatternColorTool = () => {
           {/* Black Raspberry */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#96BCBC" }}
+          className={classNames(
+            "cold-indigo",
+            isPatternColorSelected("#96BCBC")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Cold Indigo"
           onClick={() => {
             projectDispatch({
@@ -61,8 +82,12 @@ const PatternColorTool = () => {
           {/* Cold Indigo */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#0A2C49" }}
+          className={classNames(
+            "medium-indigo",
+            isPatternColorSelected("#0A2C49")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Medium Indigo"
           onClick={() => {
             projectDispatch({
@@ -74,8 +99,12 @@ const PatternColorTool = () => {
           {/* Medium Indigo */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#001129" }}
+          className={classNames(
+            "dark-indigo",
+            isPatternColorSelected("#001129")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Dark Indigo"
           onClick={() => {
             projectDispatch({
@@ -87,8 +116,29 @@ const PatternColorTool = () => {
           {/* Dark Indigo */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#E4F2E4" }}
+          className={classNames(
+            "website-white",
+            isPatternColorSelected("#fbfbf5")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Website White"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#fbfbf5",
+            });
+          }}
+        >
+          {/* Website White */}
+        </button>
+        <button
+          className={classNames(
+            "giddy-green",
+            isPatternColorSelected("#E4F2E4")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Giddy Green"
           onClick={() => {
             projectDispatch({
@@ -100,8 +150,12 @@ const PatternColorTool = () => {
           {/* Giddy Green */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#80998C" }}
+          className={classNames(
+            "growing-green",
+            isPatternColorSelected("#80998C")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Growing Green"
           onClick={() => {
             projectDispatch({
@@ -113,8 +167,12 @@ const PatternColorTool = () => {
           {/* Growing Green */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#6F7347" }}
+          className={classNames(
+            "graceful-olive",
+            isPatternColorSelected("#6F7347")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Graceful Olive"
           onClick={() => {
             projectDispatch({
@@ -126,8 +184,12 @@ const PatternColorTool = () => {
           {/* Graceful Olive */}
         </button>
         <button
-          className="color-button"
-          style={{ backgroundColor: "#2D3F23" }}
+          className={classNames(
+            "forest-green",
+            isPatternColorSelected("#2D3F23")
+              ? "color-button-selected"
+              : "color-button"
+          )}
           title="Forest Green"
           onClick={() => {
             projectDispatch({
@@ -137,6 +199,159 @@ const PatternColorTool = () => {
           }}
         >
           {/* Forest Green */}
+        </button>
+        <button
+          className={classNames(
+            "youthful-yellow",
+            isPatternColorSelected("#fbef4f")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Youthful Yellow"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#fbef4f",
+            });
+          }}
+        >
+          {/* Youthful Yellow */}
+        </button>
+        <button
+          className={classNames(
+            "yearning-yellow",
+            isPatternColorSelected("#fedc34")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Yearning Yellow"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#fedc34",
+            });
+          }}
+        >
+          {/* Yearning Yellow */}
+        </button>
+        <button
+          className={classNames(
+            "mature-yellow",
+            isPatternColorSelected("#fdbe14")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Mature Yellow"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#fdbe14",
+            });
+          }}
+        >
+          {/* Mature Yellow */}
+        </button>
+        <button
+          className={classNames(
+            "original-ochre",
+            isPatternColorSelected("#D3AD44")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Original Ochre"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#D3AD44",
+            });
+          }}
+        >
+          {/* Original Ochre */}
+        </button>
+        <button
+          className={classNames(
+            "talented-tan",
+            isPatternColorSelected("#ae8035")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Talented Tan"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#ae8035",
+            });
+          }}
+        >
+          {/* Talented Tan */}
+        </button>
+        <button
+          className={classNames(
+            "balanced-brown",
+            isPatternColorSelected("#664516")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Balanced Brown"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#664516",
+            });
+          }}
+        >
+          {/* Balanced Brown */}
+        </button>
+        <button
+          className={classNames(
+            "playful-peach",
+            isPatternColorSelected("#edae9f")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Playful Peach"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#edae9f",
+            });
+          }}
+        >
+          {/* Playful Peach */}
+        </button>
+        <button
+          className={classNames(
+            "rebellious-red",
+            isPatternColorSelected("#f06553")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Rebellious Red"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#f06553",
+            });
+          }}
+        >
+          {/* Rebellious Red */}
+        </button>
+        <button
+          className={classNames(
+            "ripened-red",
+            isPatternColorSelected("#962f1e")
+              ? "color-button-selected"
+              : "color-button"
+          )}
+          title="Ripened Red"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_COLOR",
+              payload: "#962f1e",
+            });
+          }}
+        >
+          {/* Ripened Red */}
         </button>
       </div>
     </div>

@@ -1,14 +1,144 @@
 import React from "react";
+import { useProjectContext } from "../../Context/ProjectContext";
 
 const PatternTool = () => {
+  const [projectState, projectDispatch] = useProjectContext();
+
+  const isPatternSelected = (pattern) => {
+    return projectState.patternType === pattern;
+  };
+
   return (
     <div className="Drawing-tools">
       <div className="tool-name">Pattern</div>
       <div className="pattern-button-block">
-        <button className="pattern-button">
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "circle-pattern",
+            });
+          }}
+        >
           <svg
-            width="60"
-            height="60"
+            class={
+              isPatternSelected("circle-pattern")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
+            viewBox="0 0 61 60"
+            fill="#fff8f5"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              class="pattern-icon"
+              x="2"
+              y="1"
+              width="58"
+              height="58"
+              rx="2"
+              stroke="#8A124D"
+              stroke-width="2"
+            />
+            <mask
+              id="mask0"
+              mask-type="alpha"
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width="60"
+              height="60"
+            >
+              <rect x="0.5" width="59" height="60" rx="3" fill="white" />
+            </mask>
+            <g mask="url(#mask0)">
+              <circle cx="11.5" cy="10" r="3" fill="#231F20" />
+              <circle cx="11.5" cy="29" r="3" fill="#231F20" />
+              <circle cx="11.5" cy="50" r="3" fill="#231F20" />
+              <circle cx="30.5" cy="10" r="3" fill="#231F20" />
+              <circle cx="30.5" cy="29" r="3" fill="#231F20" />
+              <circle cx="30.5" cy="50" r="3" fill="#231F20" />
+              <circle cx="50.5" cy="10" r="3" fill="#231F20" />
+              <circle cx="50.5" cy="29" r="3" fill="#231F20" />
+              <circle cx="50.5" cy="50" r="3" fill="#231F20" />
+            </g>
+          </svg>
+        </button>
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "square-pattern",
+            });
+          }}
+        >
+          <svg
+            class={
+              isPatternSelected("square-pattern")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
+            viewBox="0 0 61 60"
+            fill="#fff8f5"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              class="pattern-icon"
+              x="2"
+              y="1"
+              width="58"
+              height="58"
+              rx="2"
+              stroke="#8A124D"
+              stroke-width="2"
+            />
+            <mask
+              id="mask0"
+              mask-type="alpha"
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width="60"
+              height="60"
+            >
+              <rect x="0.5" width="60" height="60" rx="3" fill="white" />
+            </mask>
+            <g mask="url(#mask0)">
+              <rect x="9.5" y="7" width="6" height="6" fill="#231F20" />
+              <rect x="9.5" y="27" width="6" height="6" fill="#231F20" />
+              <rect x="9.5" y="48" width="6" height="6" fill="#231F20" />
+              <rect x="27.5" y="7" width="6" height="6" fill="#231F20" />
+              <rect x="27.5" y="27" width="6" height="6" fill="#231F20" />
+              <rect x="27.5" y="48" width="6" height="6" fill="#231F20" />
+              <rect x="46.5" y="7" width="6" height="6" fill="#231F20" />
+              <rect x="46.5" y="27" width="6" height="6" fill="#231F20" />
+              <rect x="46.5" y="48" width="6" height="6" fill="#231F20" />
+            </g>
+          </svg>
+        </button>
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "slash-pattern",
+            });
+          }}
+        >
+          <svg
+            class={
+              isPatternSelected("slash-pattern")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
             viewBox="0 0 61 60"
             fill="#fff8f5"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,94 +178,23 @@ const PatternTool = () => {
             </g>
           </svg>
         </button>
-        <button className="pattern-button">
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "cross-pattern",
+            });
+          }}
+        >
           <svg
-            width="60"
-            height="60"
-            viewBox="0 0 61 60"
-            fill="#fff8f5"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              class="pattern-icon"
-              x="2"
-              y="1"
-              width="58"
-              height="58"
-              rx="2"
-              stroke="#8A124D"
-              stroke-width="2"
-            />
-            <mask
-              id="mask0"
-              mask-type="alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="60"
-              height="60"
-            >
-              <rect x="0.5" width="59" height="60" rx="3" fill="white" />
-            </mask>
-            <g mask="url(#mask0)">
-              <circle cx="11.5" cy="10" r="3" fill="#231F20" />
-              <circle cx="11.5" cy="29" r="3" fill="#231F20" />
-              <circle cx="11.5" cy="50" r="3" fill="#231F20" />
-              <circle cx="30.5" cy="10" r="3" fill="#231F20" />
-              <circle cx="30.5" cy="29" r="3" fill="#231F20" />
-              <circle cx="30.5" cy="50" r="3" fill="#231F20" />
-              <circle cx="50.5" cy="10" r="3" fill="#231F20" />
-              <circle cx="50.5" cy="29" r="3" fill="#231F20" />
-              <circle cx="50.5" cy="50" r="3" fill="#231F20" />
-            </g>
-          </svg>
-        </button>
-        <button className="pattern-button">
-          <svg
-            width="60"
-            height="60"
-            viewBox="0 0 61 60"
-            fill="#fff8f5"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              class="pattern-icon"
-              x="2"
-              y="1"
-              width="58"
-              height="58"
-              rx="2"
-              stroke="#8A124D"
-              stroke-width="2"
-            />
-            <mask
-              id="mask0"
-              mask-type="alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="60"
-              height="60"
-            >
-              <rect x="0.5" width="60" height="60" rx="3" fill="white" />
-            </mask>
-            <g mask="url(#mask0)">
-              <rect x="9.5" y="7" width="6" height="6" fill="#231F20" />
-              <rect x="9.5" y="27" width="6" height="6" fill="#231F20" />
-              <rect x="9.5" y="48" width="6" height="6" fill="#231F20" />
-              <rect x="27.5" y="7" width="6" height="6" fill="#231F20" />
-              <rect x="27.5" y="27" width="6" height="6" fill="#231F20" />
-              <rect x="27.5" y="48" width="6" height="6" fill="#231F20" />
-              <rect x="46.5" y="7" width="6" height="6" fill="#231F20" />
-              <rect x="46.5" y="27" width="6" height="6" fill="#231F20" />
-              <rect x="46.5" y="48" width="6" height="6" fill="#231F20" />
-            </g>
-          </svg>
-        </button>
-        <button className="pattern-button">
-          <svg
-            width="60"
-            height="60"
+            class={
+              isPatternSelected("cross-pattern")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
             viewBox="0 0 60 61"
             fill="#fff8f5"
             xmlns="http://www.w3.org/2000/svg"
@@ -181,10 +240,23 @@ const PatternTool = () => {
             </g>
           </svg>
         </button>
-        <button className="pattern-button">
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "diagonal-lines",
+            });
+          }}
+        >
           <svg
-            width="60"
-            height="60"
+            class={
+              isPatternSelected("diagonal-lines")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
             viewBox="0 0 60 60"
             fill="#fff8f5"
             xmlns="http://www.w3.org/2000/svg"
@@ -270,10 +342,23 @@ const PatternTool = () => {
             </g>
           </svg>
         </button>
-        <button className="pattern-button">
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "halftone-circles",
+            });
+          }}
+        >
           <svg
-            width="60"
-            height="60"
+            class={
+              isPatternSelected("halftone-circles")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
             viewBox="0 0 60 60"
             fill="#fff8f5"
             xmlns="http://www.w3.org/2000/svg"
@@ -614,10 +699,23 @@ const PatternTool = () => {
             />
           </svg>
         </button>
-        <button className="pattern-button">
+        <button
+          className="pattern-button"
+          onClick={() => {
+            projectDispatch({
+              type: "SET_PATTERN_TYPE",
+              payload: "solid",
+            });
+          }}
+        >
           <svg
-            width="60"
-            height="60"
+            class={
+              isPatternSelected("solid")
+                ? "pattern-icon-selected"
+                : "pattern-icon"
+            }
+            width="52"
+            height="52"
             viewBox="0 0 60 60"
             fill="#fff8f5"
             xmlns="http://www.w3.org/2000/svg"

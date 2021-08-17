@@ -5,6 +5,10 @@ import Paper, { Path, Point, PaperScope, project, Tool } from "paper";
 const ShapeTool = () => {
   const [projectState, projectDispatch] = useProjectContext();
 
+  const isShapeSelected = (shape) => {
+    return projectState.shapeType === shape;
+  };
+
   return (
     <div className="Drawing-tools">
       <div className="tool-name">Shape</div>
@@ -16,9 +20,11 @@ const ShapeTool = () => {
           }}
         >
           <svg
-            class="shape-icon"
-            width="62"
-            height="62"
+            class={
+              isShapeSelected("square") ? "shape-icon-selected" : "shape-icon"
+            }
+            width="64"
+            height="64"
             viewBox="0 0 64 64"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -40,9 +46,11 @@ const ShapeTool = () => {
           }
         >
           <svg
-            class="shape-icon"
-            width="62"
-            height="62"
+            class={
+              isShapeSelected("circle") ? "shape-icon-selected" : "shape-icon"
+            }
+            width="64"
+            height="64"
             viewBox="0 0 62 62"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -57,9 +65,11 @@ const ShapeTool = () => {
           }
         >
           <svg
-            class="shape-icon"
-            width="72"
-            height="62"
+            class={
+              isShapeSelected("triangle") ? "shape-icon-selected" : "shape-icon"
+            }
+            width="74"
+            height="64"
             viewBox="0 0 72 62"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

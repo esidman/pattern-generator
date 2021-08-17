@@ -19,6 +19,16 @@ const reducer = (state, action) => {
         ...state,
         drawShape: action.payload,
       };
+    case "SET_PATTERN_TYPE":
+      return {
+        ...state,
+        patternType: action.payload,
+      };
+    case "SET_DRAW_PATTERN":
+      return {
+        ...state,
+        drawPattern: action.payload,
+      };
     case "SET_PATTERN_COLOR":
       return {
         ...state,
@@ -55,8 +65,7 @@ export function ProjectProvider({ children }) {
     if (x2 < x1 && y2 < y1) {
       for (var x = x1; x >= x2; x -= w) {
         for (var y = y1; y >= y2; y -= w) {
-          new Path.Circle(new Point(x, y), size).fillColor =
-            projectState.patternColor;
+          projectState.drawPattern(x, y);
         }
       }
     }
@@ -64,8 +73,7 @@ export function ProjectProvider({ children }) {
     if (x2 > x1 && y2 < y1) {
       for (var x = x1; x <= x2; x += w) {
         for (var y = y1; y >= y2; y -= w) {
-          new Path.Circle(new Point(x, y), size).fillColor =
-            projectState.patternColor;
+          projectState.drawPattern(x, y);
         }
       }
     }
@@ -73,8 +81,7 @@ export function ProjectProvider({ children }) {
     if (x2 < x1 && y2 > y1) {
       for (var x = x1; x >= x2; x -= w) {
         for (var y = y1; y <= y2; y += w) {
-          new Path.Circle(new Point(x, y), size).fillColor =
-            projectState.patternColor;
+          projectState.drawPattern(x, y);
         }
       }
     }
@@ -82,8 +89,7 @@ export function ProjectProvider({ children }) {
     if (x2 > x1 && y2 > y1) {
       for (var x = x1; x <= x2; x += w) {
         for (var y = y1; y <= y2; y += w) {
-          new Path.Circle(new Point(x, y), size).fillColor =
-            projectState.patternColor;
+          projectState.drawPattern(x, y);
         }
       }
     }
@@ -102,17 +108,71 @@ export function ProjectProvider({ children }) {
     var point1 = new Point(x1, y1);
     var point2 = new Point(x1, y2);
     var r = point1.getDistance(point2);
+    var j = 50;
+    var i;
 
     // Draws pattern
+    if (projectState.patternType === "halftone-circles") {
+      // Draws pattern for downward mouse drag
+      if (y2 > y1) {
+        for (var y = y1 + w / 8, i = j; y <= y2, i > 1; y += w / 2, i--) {
+          for (
+            var x = x1;
+            x <= Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1 - r, 2)) + x1;
+            x += w / 2
+          ) {
+            new Path.Circle(
+              new Point(x, y),
+              (10 * size * (i / j)) / 4
+            ).fillColor = projectState.patternColor;
+          }
+        }
+        for (var y = y1 + w / 8, i = j; y <= y2, i > 1; y += w / 2, i--) {
+          for (
+            var x = x1 - w / 2;
+            x >= -Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1 - r, 2)) + x1;
+            x -= w / 2
+          ) {
+            new Path.Circle(
+              new Point(x, y),
+              (10 * size * (i / j)) / 4
+            ).fillColor = projectState.patternColor;
+          }
+        }
+      }
+      // Draws pattern for upward mouse drag
+      if (y2 < y1) {
+        for (var y = y1 - w / 8, i = j; y >= y2, i > 1; y -= w / 2, i--) {
+          for (
+            var x = x1;
+            x <= Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1 + r, 2)) + x1;
+            x += w / 2
+          ) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
+              projectState.patternColor;
+          }
+        }
+        for (var y = y1 - w / 8, i = j; y >= y2, i > 1; y -= w / 2, i--) {
+          for (
+            var x = x1 - w / 2;
+            x >= -Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1 + r, 2)) + x1;
+            x -= w / 2
+          ) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 4).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      return;
+    }
+
     for (var y = 0; y <= 10000; y += h) {
       for (
         var x = x1;
         x <= Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + x1;
         x += w
       ) {
-        new Path.Circle(new Point(x, y), size).fillColor =
-          projectState.patternColor;
-        console.log(projectState.patternColor);
+        projectState.drawPattern(x, y);
       }
     }
     for (var y = 0; y <= 10000; y += h) {
@@ -121,8 +181,7 @@ export function ProjectProvider({ children }) {
         x >= -Math.sqrt(Math.pow(r, 2) - Math.pow(y - y1, 2)) + x1;
         x -= w
       ) {
-        new Path.Circle(new Point(x, y), size).fillColor =
-          projectState.patternColor;
+        projectState.drawPattern(x, y);
       }
     }
   };
@@ -138,7 +197,67 @@ export function ProjectProvider({ children }) {
     var w = projectState.spacingValue;
     var size = projectState.sizeValue;
 
+    // Sets circle diameter and spacing for halftones
+    var w = 15;
+
+    // Sets number of rows
+    var j = 50;
+    var i;
+
     // Draws pattern
+    if (projectState.patternType === "diagonal-lines") {
+      if (y2 > y1) {
+        for (var y = y1, i = 0; y <= y2; y += (w * Math.sqrt(3)) / 2, i++) {
+          var patternShape = new Path.Line(
+            new Point(x1 + (i * w) / 2, y),
+            new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
+          );
+          patternShape.strokeColor = projectState.patternColor;
+          patternShape.strokeWidth = 1;
+        }
+      } else {
+        for (var y = y1, i = 0; y >= y2; y -= (w * Math.sqrt(3)) / 2, i--) {
+          var patternShape = new Path.Line(
+            new Point(x1 + (i * w) / 2, y),
+            new Point(x1 - (y2 - y1) / Math.sqrt(3) + i * w, y2)
+          );
+          patternShape.strokeColor = projectState.patternColor;
+          patternShape.strokeWidth = 1;
+        }
+      }
+      return;
+    }
+
+    if (projectState.patternType === "halftone-circles") {
+      // Draws pattern for downward mouse drag
+      if (y2 > y1) {
+        for (var y = y1, i = j; y <= y2; y += (Math.sqrt(3) / 2) * w, i--) {
+          for (
+            var x = (-1 / Math.sqrt(3)) * y + x1 + (1 / Math.sqrt(3)) * y1;
+            x <= (1 / Math.sqrt(3)) * y + x1 - 0.578 * y1;
+            x += w
+          ) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 2).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      // Draws pattern for upward mouse drag
+      if (y2 < y1) {
+        for (var y = y1, i = j; y >= y2; y -= (Math.sqrt(3) / 2) * w, i--) {
+          for (
+            var x = (1 / Math.sqrt(3)) * y + x1 - (1 / Math.sqrt(3)) * y1;
+            x <= (-1 / Math.sqrt(3)) * y + x1 + 0.578 * y1;
+            x += w
+          ) {
+            new Path.Circle(new Point(x, y), (w * (i / j)) / 2).fillColor =
+              projectState.patternColor;
+          }
+        }
+      }
+      return;
+    }
+
     if (y2 > y1) {
       for (var y = y1; y <= y2; y += (Math.sqrt(3) / 2) * w) {
         for (
@@ -146,8 +265,7 @@ export function ProjectProvider({ children }) {
           x <= (1 / Math.sqrt(3)) * y + x1 - 0.578 * y1;
           x += w
         ) {
-          new Path.Circle(new Point(x, y), size).fillColor =
-            projectState.patternColor;
+          projectState.drawPattern(x, y);
         }
       }
     }
@@ -159,17 +277,69 @@ export function ProjectProvider({ children }) {
           x <= (-1 / Math.sqrt(3)) * y + x1 + 0.578 * y1;
           x += w
         ) {
-          new Path.Circle(new Point(x, y), size).fillColor =
-            projectState.patternColor;
+          projectState.drawPattern(x, y);
         }
       }
     }
+  };
+
+  const circlePattern = (x, y) => {
+    var size = projectState.sizeValue;
+    var x;
+    var y;
+
+    new Path.Circle(new Point(x, y), size).fillColor =
+      projectState.patternColor;
+  };
+
+  const squarePattern = (x, y) => {
+    var size = (projectState.sizeValue * 5) / 3;
+    var x;
+    var y;
+
+    new Path.Rectangle(new Point(x, y), size, size).fillColor =
+      projectState.patternColor;
+  };
+
+  const slashPattern = (x, y) => {
+    var size = projectState.sizeValue;
+    var l = (size * 8) / 3;
+    var x;
+    var y;
+
+    var patternShape = new Path.Line(
+      new Point(x, y),
+      new Point(x - (3 / 4) * l, y + l)
+    );
+    patternShape.strokeColor = projectState.patternColor;
+    patternShape.strokeWidth = (size * 2) / 3;
+  };
+
+  const crossPattern = (x, y) => {
+    var size = projectState.sizeValue;
+    var l = (size * 10) / 3;
+    var x;
+    var y;
+
+    var patternShapeUp = new Path.Line(
+      new Point(x + l / 2, y),
+      new Point(x + l / 2, y + l)
+    );
+    patternShapeUp.strokeColor = projectState.patternColor;
+    patternShapeUp.strokeWidth = size / 3;
+    var patternShapeDown = new Path.Line(
+      new Point(x, y + l / 2),
+      new Point(x + l, y + l / 2)
+    );
+    patternShapeDown.strokeColor = projectState.patternColor;
+    patternShapeDown.strokeWidth = size / 3;
   };
 
   const value = {
     shapeType: "square",
     drawShape: squareShape,
     patternType: "circle-pattern",
+    drawPattern: circlePattern,
     patternColor: "#D3AD44",
     spacingValue: 30,
     sizeValue: 3,
@@ -188,10 +358,24 @@ export function ProjectProvider({ children }) {
       if (projectState.shapeType === "triangle") {
         projectDispatch({ type: "SET_DRAW_SHAPE", payload: triangleShape });
       }
+      if (projectState.patternType === "circle-pattern") {
+        projectDispatch({ type: "SET_DRAW_PATTERN", payload: circlePattern });
+      }
+      if (projectState.patternType === "square-pattern") {
+        projectDispatch({ type: "SET_DRAW_PATTERN", payload: squarePattern });
+      }
+      if (projectState.patternType === "slash-pattern") {
+        projectDispatch({ type: "SET_DRAW_PATTERN", payload: slashPattern });
+      }
+      if (projectState.patternType === "cross-pattern") {
+        projectDispatch({ type: "SET_DRAW_PATTERN", payload: crossPattern });
+      }
     },
-    // useEffect dependency
+    // useEffect dependencies
     [
       projectState.shapeType,
+      projectState.patternType,
+      projectState.drawShape,
       projectState.patternColor,
       projectState.spacingValue,
       projectState.sizeValue,
