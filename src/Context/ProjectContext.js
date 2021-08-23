@@ -52,6 +52,11 @@ const reducer = (state, action) => {
         ...state,
         sizeValue: action.payload,
       };
+    case "SET_BACKGROUND_COLOR":
+      return {
+        ...state,
+        backgroundColor: action.payload,
+      };
     default:
       return state;
   }
@@ -471,6 +476,7 @@ export function ProjectProvider({ children }) {
     patternColor: "#D3AD44",
     spacingValue: 30,
     sizeValue: 3,
+    backgroundColor: "#FFFFFF",
   };
   const [projectState, projectDispatch] = useReducer(reducer, value);
 
