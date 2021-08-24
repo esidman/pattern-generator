@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 const marks = [
   {
-    value: 0,
+    value: 1,
   },
   {
     value: 100,
@@ -117,6 +117,9 @@ const SpacingTool = () => {
               onChange={handleSliderChange}
               aria-labelledby="input-slider"
               marks={marks}
+              step={1}
+              min={1}
+              max={100}
             />
           </Grid>
           <Grid item>
@@ -127,7 +130,7 @@ const SpacingTool = () => {
               onChange={handleInputChange}
               inputProps={{
                 step: 10,
-                min: 0,
+                min: 1,
                 max: 100,
                 type: "number",
                 "aria-labelledby": "input-slider",

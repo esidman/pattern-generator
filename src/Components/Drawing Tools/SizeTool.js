@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 const marks = [
   {
-    value: 0,
+    value: 1,
   },
   {
     value: 20,
@@ -118,7 +118,7 @@ const SizeTool = () => {
               aria-labelledby="input-slider"
               marks={marks}
               step={1}
-              min={0}
+              min={1}
               max={20}
             />
           </Grid>
@@ -130,7 +130,7 @@ const SizeTool = () => {
               onChange={handleInputChange}
               inputProps={{
                 step: 1,
-                min: 0,
+                min: 1,
                 max: 20,
                 type: "number",
                 "aria-labelledby": "input-slider",
