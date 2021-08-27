@@ -1,5 +1,6 @@
 import { useContext, createContext, useReducer, useEffect } from "react";
 import {
+  paper,
   Path,
   Point,
   Rectangle,
@@ -64,7 +65,7 @@ const reducer = (state, action) => {
 
 export function ProjectProvider({ children }) {
   const squareShape = (event) => {
-    project.clear();
+    project.activeLayer.clear();
 
     // Sets beginning and end points, and pattern spacing
     var x1 = event.downPoint.x;
@@ -156,7 +157,7 @@ export function ProjectProvider({ children }) {
   };
   const circleShape = (event) => {
     // Refreshes canvas every frame (super important for performance!)
-    project.clear();
+    project.activeLayer.clear();
     // Sets beginning and end points, and pattern spacing
     var x1 = event.downPoint.x;
     var y1 = event.downPoint.y;
@@ -292,7 +293,7 @@ export function ProjectProvider({ children }) {
   };
   const triangleShape = (event) => {
     // Refreshes canvas every frame (super important for performance!)
-    project.clear();
+    project.activeLayer.clear();
 
     // Sets beginning and end points, and pattern spacing
     var x1 = event.downPoint.x;

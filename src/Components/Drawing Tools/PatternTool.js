@@ -109,7 +109,7 @@ const PatternTool = () => {
             >
               <rect x="0.5" width="60" height="60" rx="3" fill="white" />
             </mask>
-            <g mask="url(#mask0)">
+            <g className="pattern-element" mask="url(#mask0)">
               <rect x="9.5" y="7" width="6" height="6" fill="#231F20" />
               <rect x="9.5" y="27" width="6" height="6" fill="#231F20" />
               <rect x="9.5" y="48" width="6" height="6" fill="#231F20" />
@@ -150,7 +150,6 @@ const PatternTool = () => {
               width="58"
               height="58"
               rx="2"
-              fill="#fff8f5"
               stroke="#8A124D"
               stroke-width="2"
             />
@@ -196,11 +195,10 @@ const PatternTool = () => {
             width="52"
             height="52"
             viewBox="0 0 60 61"
-            fill="#fff8f5"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <rect
-              class="pattern-icon"
               x="1"
               y="1"
               width="58"
@@ -216,27 +214,19 @@ const PatternTool = () => {
               x="0"
               y="0"
               width="60"
-              height="60"
+              height="61"
             >
               <rect y="0.5" width="60" height="60" rx="3" fill="white" />
             </mask>
             <g mask="url(#mask0)">
-              <path
-                d="M19.3355 14.701H15.1345V10.5H14.201V14.701H10V15.6345H14.201V19.8355H15.1345V15.6345H19.3355V14.701Z"
-                fill="#231F20"
-              />
-              <path
-                d="M19.3355 44.4049H15.1345V40.2039H14.201V44.4049H10V45.3385H14.201V49.5394H15.1345V45.3385H19.3355V44.4049Z"
-                fill="#231F20"
-              />
-              <path
-                d="M49.0387 14.701H44.8377V10.5H43.9041V14.701H39.7031V15.6345H43.9041V19.8355H44.8377V15.6345H49.0387V14.701Z"
-                fill="#231F20"
-              />
-              <path
-                d="M49.0387 44.4049H44.8377V40.2039H43.9041V44.4049H39.7031V45.3385H43.9041V49.5394H44.8377V45.3385H49.0387V44.4049Z"
-                fill="#231F20"
-              />
+              <line x1="15" y1="10" x2="15" y2="20" stroke="#231F20" />
+              <line x1="10" y1="15" x2="20" y2="15" stroke="#231F20" />
+              <line x1="15" y1="40" x2="15" y2="50" stroke="#231F20" />
+              <line x1="10" y1="45" x2="20" y2="45" stroke="#231F20" />
+              <line x1="44" y1="10" x2="44" y2="20" stroke="#231F20" />
+              <line x1="39" y1="15" x2="49" y2="15" stroke="#231F20" />
+              <line x1="44" y1="40" x2="44" y2="50" stroke="#231F20" />
+              <line x1="39" y1="45" x2="49" y2="45" stroke="#231F20" />
             </g>
           </svg>
         </button>
@@ -258,11 +248,10 @@ const PatternTool = () => {
             width="52"
             height="52"
             viewBox="0 0 60 60"
-            fill="#fff8f5"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <rect
-              class="pattern-icon"
               x="1"
               y="1"
               width="58"
@@ -275,71 +264,81 @@ const PatternTool = () => {
               id="mask0"
               mask-type="alpha"
               maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="60"
-              height="60"
+              x="2"
+              y="2"
+              width="56"
+              height="56"
             >
-              <rect width="60" height="60" rx="3" fill="white" />
+              <rect x="2" y="2" width="56" height="56" fill="white" />
             </mask>
             <g mask="url(#mask0)">
-              <path d="M16.4024 0L2 14.4024V15L17 0H16.4024Z" fill="#1B1B1B" />
-              <path d="M29.4087 0L2 27.4087V28L30 0H29.4087Z" fill="#1B1B1B" />
-              <path d="M43.3965 0L2 42.3822V43L44 0H43.3965Z" fill="#1B1B1B" />
-              <path d="M57.3866 0L2 55.3866V56L58 0H57.3866Z" fill="#1B1B1B" />
-              <path d="M70.3952 0L2 68.3952V69L71 0H70.3952Z" fill="#1B1B1B" />
-              <path d="M84.3912 0L2 82.3912V83L85 0H84.3912Z" fill="#1B1B1B" />
-              <path d="M97.391 0L2 95.391V96L98 0H97.391Z" fill="#1B1B1B" />
-              <path
-                d="M110.397 0L2 109.392V110L111 0H110.397Z"
-                fill="#1B1B1B"
+              <line
+                x1="11.6464"
+                y1="58.6464"
+                x2="58.6464"
+                y2="11.6464"
+                stroke="#231F20"
               />
-              <path
-                d="M124.394 0L2 123.389V124L125 0H124.394Z"
-                fill="#1B1B1B"
+              <line
+                x1="-4.35355"
+                y1="47.6464"
+                x2="42.6464"
+                y2="0.646445"
+                stroke="#231F20"
               />
-              <path
-                d="M137.393 0L2 136.388V137L138 0H137.393Z"
-                fill="#1B1B1B"
+              <line
+                x1="0.646447"
+                y1="28.6464"
+                x2="28.6464"
+                y2="0.646447"
+                stroke="#231F20"
               />
-              <path
-                d="M151.394 0L2 149.394V150L152 0H151.394Z"
-                fill="#1B1B1B"
+              <line
+                x1="0.646447"
+                y1="15.6464"
+                x2="15.6464"
+                y2="0.646447"
+                stroke="#231F20"
               />
-              <path
-                d="M165.392 0L2 163.392V164L166 0H165.392Z"
-                fill="#1B1B1B"
+              <line
+                x1="0.646447"
+                y1="56.6464"
+                x2="56.6464"
+                y2="0.646447"
+                stroke="#231F20"
               />
-              <path d="M178.39 0L2 176.39V177L179 0H178.39Z" fill="#1B1B1B" />
-              <path
-                d="M191.395 0L2 190.392V191L192 0H191.395Z"
-                fill="#1B1B1B"
+              <line
+                x1="25.6464"
+                y1="58.6464"
+                x2="58.6464"
+                y2="25.6464"
+                stroke="#231F20"
               />
-              <path
-                d="M205.394 0L2 204.391V205L206 0H205.394Z"
-                fill="#1B1B1B"
+              <line
+                x1="38.6464"
+                y1="58.6464"
+                x2="58.6464"
+                y2="38.6464"
+                stroke="#231F20"
               />
-              <path
-                d="M218.392 0L2 217.389V218L219 0H218.392Z"
-                fill="#1B1B1B"
+              <line
+                x1="51.6464"
+                y1="58.6464"
+                x2="58.6464"
+                y2="51.6464"
+                stroke="#231F20"
               />
-              <path
-                d="M231.396 0L2 230.394V231L232 0H231.396Z"
-                fill="#1B1B1B"
-              />
-              <path
-                d="M245.395 0L2 244.392V245L246 0H245.395Z"
-                fill="#1B1B1B"
-              />
-              <path
-                d="M259 0H258.887L2 257.89V258H2.49577L259 0.497702V0Z"
-                fill="#1B1B1B"
-              />
-              <path d="M259 13L15 258H15.606L259 13.6085V13Z" fill="#1B1B1B" />
-              <path d="M259 27L29 258H29.6046L259 27.6073V27Z" fill="#1B1B1B" />
-              <path d="M259 40L42 258H42.6095L259 40.6123V40Z" fill="#1B1B1B" />
-              <path d="M259 54L55 258H55.6073L259 54.6073V54Z" fill="#1B1B1B" />
             </g>
+            <rect
+              x="1"
+              y="1"
+              width="58"
+              height="58"
+              rx="2"
+              stroke="#8A124D"
+              stroke-width="2"
+              fill="none"
+            />
           </svg>
         </button>
         <button

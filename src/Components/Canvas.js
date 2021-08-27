@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 // import Paper,{Path} from './lib/paperjs/dist/paper-full.js';
-import Paper, { Path, Point, PaperScope, project, Tool } from "paper";
+import Paper, {
+  Path,
+  Point,
+  PaperScope,
+  paper,
+  project,
+  Tool,
+  activeLayer,
+} from "paper";
 import { useProjectContext } from "../Context/ProjectContext";
+import { Layer } from "paper/dist/paper-core";
 let tool = new Tool();
 
 const Canvas = (props) => {
@@ -13,7 +22,9 @@ const Canvas = (props) => {
 
   //Clears canvas on mouse click
   const handleMouseDown = (event) => {
-    project.clear();
+    // project.clear();
+    let oldLayer = new paper.Layer();
+    oldLayer.insertBelow(activeLayer);
   };
 
   return (

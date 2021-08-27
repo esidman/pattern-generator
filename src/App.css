@@ -102,11 +102,16 @@ canvas {
   font-family: "Apercu Mono Pro";
   font-size: 1rem;
   padding: 4px 12px;
+  height: 36px;
 }
 
 .canvas-history-button:hover {
   background-color: #8b134d;
   color: white;
+}
+
+.canvas-history-button:hover svg {
+  fill: white;
 }
 
 .canvas-bottom-button-group {
@@ -200,7 +205,7 @@ canvas {
   width: 36px;
   margin-right: 18px;
   outline: 4px solid #8b134d;
-  outline-offset: -3px;
+  outline-offset: -4px;
 }
 
 .shape-button {
@@ -234,9 +239,29 @@ canvas {
   fill: #8b134d;
 }
 
-.pattern-element:hover {
+.pattern-icon:hover circle,
+.pattern-icon:hover path,
+.pattern-icon:hover .pattern-element rect {
   fill: white;
 }
+
+.pattern-icon-selected circle,
+.pattern-icon-selected path,
+.pattern-icon-selected .pattern-element rect {
+  fill: white;
+}
+
+.pattern-icon:hover line {
+  stroke: white;
+}
+
+.pattern-icon-selected line {
+  stroke: white;
+}
+
+/* .pattern-element:hover rect {
+  fill: white;
+} */
 
 /* Vertical spacing between drawing tools */
 .Drawing-tools {
