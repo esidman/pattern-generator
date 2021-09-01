@@ -76,8 +76,70 @@ export function ProjectProvider({ children }) {
     var size = projectState.sizeValue;
     var i;
     var j = 32;
+    var lines = new Group();
 
-    // Draws Halftone
+    // Draws diagonal lines
+    if (projectState.patternType === "diagonal-lines") {
+      if (x2 < x1 && y2 < y1) {
+        for (
+          var x = x1, y = y1;
+          x > -10000, y > -10000;
+          x -= w / 2, y -= w / 2
+        ) {
+          var patternShape = new Path.Line(new Point(x1, y), new Point(x, y1));
+          patternShape.strokeColor = projectState.patternColor;
+          patternShape.strokeWidth = size / 3;
+          lines.addChild(patternShape);
+        }
+      }
+
+      if (x2 > x1 && y2 < y1) {
+        for (
+          var x = x1, y = y1;
+          x <= 10000, y > -10000;
+          x += w / 2, y -= w / 2
+        ) {
+          var patternShape = new Path.Line(new Point(x1, y), new Point(x, y1));
+          patternShape.strokeColor = projectState.patternColor;
+          patternShape.strokeWidth = size / 3;
+          lines.addChild(patternShape);
+        }
+      }
+
+      if (x2 < x1 && y2 > y1) {
+        for (
+          var x = x1, y = y1;
+          x <= 10000, y <= 10000;
+          x -= w / 2, y += w / 2
+        ) {
+          var patternShape = new Path.Line(new Point(x1, y), new Point(x, y1));
+          patternShape.strokeColor = projectState.patternColor;
+          patternShape.strokeWidth = size / 3;
+          lines.addChild(patternShape);
+        }
+      }
+
+      if (x2 > x1 && y2 > y1) {
+        for (
+          var x = x1, y = y1;
+          x <= 10000, y <= 10000;
+          x += w / 2, y += w / 2
+        ) {
+          var patternShape = new Path.Line(new Point(x1, y), new Point(x, y1));
+          patternShape.strokeColor = projectState.patternColor;
+          patternShape.strokeWidth = size / 3;
+          lines.addChild(patternShape);
+        }
+      }
+      var box = new Path.Rectangle(new Point(x1, y1), new Point(x2, y2));
+
+      var mask = new Group(box, lines);
+      mask.clipped = true;
+
+      return;
+    }
+
+    // Draws halftone
     if (projectState.patternType === "halftone-circles") {
       if (x2 < x1 && y2 < y1) {
         for (var y = y1, i = j; y >= y2; y -= w / 2, i--) {

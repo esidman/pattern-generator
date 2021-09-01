@@ -1,6 +1,6 @@
 {
   "homepage": "http://esidman.github.io/tandem-pattern-generator",
-  "name": "pattern-generator",
+  "name": "tandem-pattern-generator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
